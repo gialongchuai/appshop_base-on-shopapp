@@ -1,5 +1,6 @@
-package com.gialongchuai.shopapp.dtos.response;
+package com.gialongchuai.shopapp.dtos.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CategoryResponse {
-    String id;
+public class CategoryUpdationRequest {
+    @NotBlank(message = "CATEGORY_IS_REQUIRED")
     String name;
 }

@@ -1,4 +1,5 @@
 package com.gialongchuai.shopapp.dtos.response;
 
 public class UserResponse {
+    String id;
 }

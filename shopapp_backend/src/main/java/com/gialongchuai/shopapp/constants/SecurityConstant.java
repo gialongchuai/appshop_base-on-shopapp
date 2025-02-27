@@ -2,7 +2,7 @@ package com.gialongchuai.shopapp.constants;
 
 public class SecurityConstant {
     public static final String[] PUBLIC_ENDPOINTS = {
-            "/email/send", "/email/send/abc"
+            "/categories", "/categories/{categoryId}"
     };
 
     public static final String JWT_AUTHORITY_PREFIX = "";

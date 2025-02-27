@@ -1,5 +1,6 @@
 package com.gialongchuai.shopapp.dtos.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,4 +12,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryCreationRequest {
+    @NotBlank(message = "CATEGORY_IS_REQUIRED")
+    String name;
 }

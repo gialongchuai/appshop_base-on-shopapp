@@ -19,8 +19,8 @@ public class GlobalException {
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> sampleHandlingRunTimeException(Exception exception) {
         ApiResponse apiResponse = new ApiResponse();
-        apiResponse.setCode(ErrorCode.UNAUTHENTICATED.getCode());
-        apiResponse.setMessage(ErrorCode.UNAUTHENTICATED.getMessage());
+        apiResponse.setCode(SecurityErrorCode.UNAUTHENTICATED.getCode());
+        apiResponse.setMessage(SecurityErrorCode.UNAUTHENTICATED.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
     }
 
@@ -34,22 +34,22 @@ public class GlobalException {
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handlingAppException(AppException appException) {
-        ErrorCode errorCode = appException.getErrorCode();
-        return ResponseEntity.status(errorCode.getHttpStatusCode())
+        BaseErrorCode baseErrorCode = appException.getBaseErrorCode();
+        return ResponseEntity.status(baseErrorCode.getHttpStatusCode())
                 .body(ApiResponse.builder()
-                        .code(errorCode.getCode())
-                        .message(errorCode.getMessage())
+                        .code(baseErrorCode.getCode())
+                        .message(baseErrorCode.getMessage())
                         .build());
     }
 
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException accessDeniedException) {
-        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+        SecurityErrorCode securityErrorCode = SecurityErrorCode.UNAUTHORIZED;
 
-        return ResponseEntity.status(errorCode.getHttpStatusCode())
+        return ResponseEntity.status(securityErrorCode.getHttpStatusCode())
                 .body(ApiResponse.builder()
-                        .code(errorCode.getCode())
-                        .message((errorCode.getMessage()))
+                        .code(securityErrorCode.getCode())
+                        .message((securityErrorCode.getMessage()))
                         .build());
     }
 
@@ -78,10 +78,10 @@ public class GlobalException {
     ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(
             MethodArgumentNotValidException methodArgumentNotValidException) {
         String enumKey = methodArgumentNotValidException.getFieldError().getDefaultMessage();
-        ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
+        SecurityErrorCode securityErrorCode = SecurityErrorCode.UNCATEGORIZED_EXCEPTION;
         Map<String, Object> attributes = null;
         try {
-            errorCode = ErrorCode.valueOf(enumKey);
+            securityErrorCode = SecurityErrorCode.valueOf(enumKey);
 
             var constraintViolation = methodArgumentNotValidException
                     .getBindingResult()
@@ -98,11 +98,11 @@ public class GlobalException {
 
         return ResponseEntity.badRequest()
                 .body(ApiResponse.builder()
-                        .code((errorCode.getCode()))
+                        .code((securityErrorCode.getCode()))
                         .message(
                                 Objects.nonNull(attributes)
-                                        ? mapAttribute(errorCode.getMessage(), attributes)
-                                        : errorCode.getMessage())
+                                        ? mapAttribute(securityErrorCode.getMessage(), attributes)
+                                        : securityErrorCode.getMessage())
                         .build());
     }
 
