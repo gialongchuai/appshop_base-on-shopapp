@@ -1,13 +1,9 @@
 package com.gialongchuai.shopapp.controllers;
 
-import com.gialongchuai.shopapp.dtos.request.CategoryCreationRequest;
-import com.gialongchuai.shopapp.dtos.request.CategoryUpdationRequest;
 import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
 import com.gialongchuai.shopapp.dtos.request.ProductUpdationRequest;
 import com.gialongchuai.shopapp.dtos.response.ApiResponse;
-import com.gialongchuai.shopapp.dtos.response.CategoryResponse;
 import com.gialongchuai.shopapp.dtos.response.ProductResponse;
-import com.gialongchuai.shopapp.services.CategoryService;
 import com.gialongchuai.shopapp.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -15,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -25,7 +22,7 @@ public class ProductController {
     ProductService productService;
 
     @PostMapping
-    ApiResponse<ProductResponse> create(@RequestBody ProductCreationRequest productCreationRequest) {
+    ApiResponse<ProductResponse> create(@ModelAttribute @Valid ProductCreationRequest productCreationRequest) throws IOException {
         return ApiResponse.<ProductResponse>builder()
                 .result(productService.create(productCreationRequest))
                 .build();

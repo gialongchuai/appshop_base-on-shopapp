@@ -25,7 +25,7 @@ public class ProductResponse {
     String description;
     LocalDate createdAt;
     LocalDate updatedAt;
-    Category category;
-    List<ProductImage> images;
-    List<OrderDetail> orderDetails;
+    List<ProductImageResponse> images;
+    //Category category;
+    //List<OrderDetail> orderDetails;
 }
