@@ -5,7 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -35,10 +35,10 @@ public class Product {
     String description;
 
     @Column(name = "created_at")
-    LocalDateTime createdAt;
+    LocalDate createdAt;
 
     @Column(name = "updated_at")
-    LocalDateTime updatedAt;
+    LocalDate updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", referencedColumnName = "id")

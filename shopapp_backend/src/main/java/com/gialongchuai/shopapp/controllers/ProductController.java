@@ -1,0 +1,63 @@
+package com.gialongchuai.shopapp.controllers;
+
+import com.gialongchuai.shopapp.dtos.request.CategoryCreationRequest;
+import com.gialongchuai.shopapp.dtos.request.CategoryUpdationRequest;
+import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
+import com.gialongchuai.shopapp.dtos.request.ProductUpdationRequest;
+import com.gialongchuai.shopapp.dtos.response.ApiResponse;
+import com.gialongchuai.shopapp.dtos.response.CategoryResponse;
+import com.gialongchuai.shopapp.dtos.response.ProductResponse;
+import com.gialongchuai.shopapp.services.CategoryService;
+import com.gialongchuai.shopapp.services.ProductService;
+import jakarta.validation.Valid;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequiredArgsConstructor
+@RestController
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping("/products")
+public class ProductController {
+    ProductService productService;
+
+    @PostMapping
+    ApiResponse<ProductResponse> create(@RequestBody ProductCreationRequest productCreationRequest) {
+        return ApiResponse.<ProductResponse>builder()
+                .result(productService.create(productCreationRequest))
+                .build();
+    }
+
+    @GetMapping
+    ApiResponse<List<ProductResponse>> getAllProducts() {
+        return ApiResponse.<List<ProductResponse>>builder()
+                .result(productService.getAllProducts())
+                .build();
+    }
+
+    @GetMapping("/{productId}")
+    ApiResponse<ProductResponse> getProduct(@PathVariable String productId) {
+        return ApiResponse.<ProductResponse>builder()
+                .result(productService.getProduct(productId))
+                .build();
+    }
+
+    @PutMapping("/{productId}")
+    ApiResponse<ProductResponse> updateProduct(@PathVariable String productId,
+                                                 @RequestBody @Valid ProductUpdationRequest productUpdationRequest) {
+        return ApiResponse.<ProductResponse>builder()
+                .result(productService.updateProduct(productId, productUpdationRequest))
+                .build();
+    }
+
+    @DeleteMapping("/{productId}")
+    ApiResponse<String> delete(@PathVariable String productId) {
+        productService.deleteProduct(productId);
+        return ApiResponse.<String>builder()
+                .result(productService.deleteProduct(productId))
+                .build();
+    }
+}

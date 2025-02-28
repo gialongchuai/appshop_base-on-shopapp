@@ -2,22 +2,17 @@ package com.gialongchuai.shopapp.services;
 
 import com.gialongchuai.shopapp.dtos.request.CategoryCreationRequest;
 import com.gialongchuai.shopapp.dtos.request.CategoryUpdationRequest;
-import com.gialongchuai.shopapp.dtos.response.ApiResponse;
 import com.gialongchuai.shopapp.dtos.response.CategoryResponse;
 import com.gialongchuai.shopapp.entities.Category;
-import com.gialongchuai.shopapp.exceptions.AppException;
+import com.gialongchuai.shopapp.exceptions.custom.AppException;
 import com.gialongchuai.shopapp.exceptions.CategoryErrorCode;
 import com.gialongchuai.shopapp.mappers.CategoryMapper;
 import com.gialongchuai.shopapp.repositories.CategoryRepository;
-import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Service

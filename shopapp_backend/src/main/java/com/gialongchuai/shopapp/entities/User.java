@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -36,16 +36,16 @@ public class User {
     String password;
 
     @Column(name = "created_at")
-    LocalDateTime createdAt;
+    LocalDate createdAt;
 
     @Column(name = "updated_at")
-    LocalDateTime updatedAt;
+    LocalDate updatedAt;
 
     @Column(name = "is_active", columnDefinition = "TINYINT(1) DEFAULT 1")
     Boolean isActive;
 
     @Column(name = "date_of_birth")
-    LocalDateTime dateOfBirth;
+    LocalDate dateOfBirth;
 
     @Column(name = "facebook_account_id", columnDefinition = "INT DEFAULT 0")
     Integer facebookAccountId;

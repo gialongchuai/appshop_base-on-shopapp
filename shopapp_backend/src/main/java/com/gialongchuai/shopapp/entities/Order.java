@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -42,7 +42,7 @@ public class Order {
     String note;
 
     @Column(name = "order_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-    LocalDateTime orderDate;
+    LocalDate orderDate;
 
     @Column(name = "status", columnDefinition = "ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending'")
     OrderStatus status;
@@ -57,7 +57,7 @@ public class Order {
     String shippingAddress;
 
     @Column(name = "shipping_date", columnDefinition = "DATE")
-    LocalDateTime shippingDate;
+    LocalDate shippingDate;
 
     @Column(name = "tracking_number", columnDefinition = "VARCHAR(100) COLLATE utf8mb4_general_ci")
     String trackingNumber;

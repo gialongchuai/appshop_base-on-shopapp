@@ -1,5 +1,6 @@
 package com.gialongchuai.shopapp.exceptions;
 
+import com.gialongchuai.shopapp.exceptions.custom.BaseErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

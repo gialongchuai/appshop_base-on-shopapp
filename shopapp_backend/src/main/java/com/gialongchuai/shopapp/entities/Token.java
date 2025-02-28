@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tokens", uniqueConstraints = {
@@ -29,7 +29,7 @@ public class Token {
     String tokenType;
 
     @Column(name = "expiration_date")
-    LocalDateTime expirationDate;
+    LocalDate expirationDate;
 
     @Column(name = "revoked", nullable = false, columnDefinition = "TINYINT(1)")
     Boolean revoked;
@@ -48,5 +48,5 @@ public class Token {
     String refreshToken;
 
     @Column(name = "refresh_expiration_date")
-    LocalDateTime refreshExpirationDate;
+    LocalDate refreshExpirationDate;
 }

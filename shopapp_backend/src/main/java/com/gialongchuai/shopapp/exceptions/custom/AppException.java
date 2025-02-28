@@ -1,4 +1,4 @@
-package com.gialongchuai.shopapp.exceptions;
+package com.gialongchuai.shopapp.exceptions.custom;
 
 import lombok.AccessLevel;
 import lombok.Getter;

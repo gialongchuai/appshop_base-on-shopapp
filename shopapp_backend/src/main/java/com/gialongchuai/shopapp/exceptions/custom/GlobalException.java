@@ -1,6 +1,7 @@
-package com.gialongchuai.shopapp.exceptions;
+package com.gialongchuai.shopapp.exceptions.custom;
 
 import com.gialongchuai.shopapp.dtos.response.ApiResponse;
+import com.gialongchuai.shopapp.exceptions.SecurityErrorCode;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

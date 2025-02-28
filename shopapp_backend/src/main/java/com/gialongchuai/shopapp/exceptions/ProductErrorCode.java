@@ -11,9 +11,9 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public enum CategoryErrorCode implements BaseErrorCode {
-    CATEGORY_IS_REQUIRED(2001, "Category name is required!", HttpStatus.BAD_REQUEST),
-    CATEGORY_NOT_EXISTED(2002, "Category not exist!", HttpStatus.NOT_FOUND);
+public enum ProductErrorCode implements BaseErrorCode {
+    PRODUCT_IS_REQUIRED(3001, "Product name is required!", HttpStatus.BAD_REQUEST),
+    PRODUCT_NOT_EXISTED(3002, "Product not exist!", HttpStatus.NOT_FOUND);
 
     int code;
     String message;
