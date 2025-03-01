@@ -108,6 +108,43 @@ public class ProductService {
         return false;
     }
 
+    // chat
+    public ProductResponse updateProduct(String productId, ProductUpdationRequest productUpdationRequest) throws IOException {
+        log.info("======= product: {}", productUpdationRequest);
+
+        // Tìm sản phẩm theo ID
+        Product product = productRepository.findById(productId).orElseThrow(()
+                -> new AppException(ProductErrorCode.PRODUCT_NOT_EXISTED));
+
+        // Map tất cả các trường trừ thumbnail và images
+        productMapper.updateProduct(product, productUpdationRequest);
+
+        // Xử lý thumbnail
+        if (productUpdationRequest.getThumbnail() != null && !productUpdationRequest.getThumbnail().isEmpty()) {
+            String thumbnailUrl = saveImage(productUpdationRequest.getThumbnail());
+            product.setThumbnail(thumbnailUrl);
+        }
+
+        // Xử lý images
+        List<ProductImage> existingImages = product.getImages(); // Lấy danh sách ảnh hiện có
+        if (productUpdationRequest.getImages() != null && !productUpdationRequest.getImages().isEmpty()) {
+            for (MultipartFile image : productUpdationRequest.getImages()) {
+                String imageUrl = saveImage(image); // Lưu ảnh mới
+                ProductImage productImage = ProductImage.builder()
+                        .product(product)
+                        .imageUrl(imageUrl)
+                        .build();
+                existingImages.add(productImage); // Thêm ảnh mới vào danh sách hiện có
+            }
+        }
+
+        // Cập nhật danh sách ảnh cho sản phẩm
+        product.setImages(existingImages);
+
+        // Lưu sản phẩm đã cập nhật
+        return productMapper.toProductResponse(productRepository.save(product));
+    }
+
     public List<ProductResponse> getAllProducts() {
         var products = productRepository.findAll();
         return products.stream().map(productMapper::toProductResponse).toList();
@@ -117,15 +154,6 @@ public class ProductService {
         return productMapper.toProductResponse(
                 productRepository.findById(productId).orElseThrow(()
                         -> new AppException(ProductErrorCode.PRODUCT_NOT_EXISTED)));
-    }
-
-    public ProductResponse updateProduct(String productId, ProductUpdationRequest productUpdationRequest) {
-        Product product = productRepository.findById(productId).orElseThrow(()
-                -> new AppException(ProductErrorCode.PRODUCT_NOT_EXISTED));
-
-        productMapper.updateProduct(product, productUpdationRequest);
-
-        return productMapper.toProductResponse(productRepository.save(product));
     }
 
     public String deleteProduct(String productId) {

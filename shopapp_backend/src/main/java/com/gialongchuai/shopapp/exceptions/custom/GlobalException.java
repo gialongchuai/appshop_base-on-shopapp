@@ -45,12 +45,12 @@ public class GlobalException {
 
     @ExceptionHandler(value = AccessDeniedException.class)
     ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException accessDeniedException) {
-        SecurityErrorCode securityErrorCode = SecurityErrorCode.UNAUTHORIZED;
+        BaseErrorCode baseErrorCode = SecurityErrorCode.UNAUTHORIZED;
 
-        return ResponseEntity.status(securityErrorCode.getHttpStatusCode())
+        return ResponseEntity.status(baseErrorCode.getHttpStatusCode())
                 .body(ApiResponse.builder()
-                        .code(securityErrorCode.getCode())
-                        .message((securityErrorCode.getMessage()))
+                        .code(baseErrorCode.getCode())
+                        .message((baseErrorCode.getMessage()))
                         .build());
     }
 
@@ -75,15 +75,20 @@ public class GlobalException {
 
     private static final String MIN_ATTRIBUTE = "min";
 
+    // chat
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     ResponseEntity<ApiResponse> handlingMethodArgumentNotValidException(
-            MethodArgumentNotValidException methodArgumentNotValidException) {
+        MethodArgumentNotValidException methodArgumentNotValidException) {
         String enumKey = methodArgumentNotValidException.getFieldError().getDefaultMessage();
-        SecurityErrorCode securityErrorCode = SecurityErrorCode.UNCATEGORIZED_EXCEPTION;
+        BaseErrorCode baseErrorCode = ErrorCodeResolver.resolve(enumKey);
+
+        if (baseErrorCode == null) {
+            // Nếu không tìm thấy mã lỗi phù hợp, trả về lỗi mặc định
+            baseErrorCode = SecurityErrorCode.UNCATEGORIZED_EXCEPTION;
+        }
+
         Map<String, Object> attributes = null;
         try {
-            securityErrorCode = SecurityErrorCode.valueOf(enumKey);
-
             var constraintViolation = methodArgumentNotValidException
                     .getBindingResult()
                     .getAllErrors()
@@ -94,16 +99,16 @@ public class GlobalException {
 
             log.info(attributes.toString());
         } catch (Exception e) {
-
+            // Handle exception if needed
         }
 
         return ResponseEntity.badRequest()
                 .body(ApiResponse.builder()
-                        .code((securityErrorCode.getCode()))
+                        .code(baseErrorCode.getCode())
                         .message(
                                 Objects.nonNull(attributes)
-                                        ? mapAttribute(securityErrorCode.getMessage(), attributes)
-                                        : securityErrorCode.getMessage())
+                                        ? mapAttribute(baseErrorCode.getMessage(), attributes)
+                                        : baseErrorCode.getMessage())
                         .build());
     }
 

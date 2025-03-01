@@ -1,5 +1,6 @@
 package com.gialongchuai.shopapp.exceptions;
 
+import com.gialongchuai.shopapp.exceptions.custom.BaseErrorCode;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public enum SecurityErrorCode {
+public enum SecurityErrorCode implements BaseErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error!", HttpStatus.INTERNAL_SERVER_ERROR),
     UNAUTHENTICATED(9001, "Unauthenticated!", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(9002, "You don't have permission!", HttpStatus.FORBIDDEN);

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 @RequestMapping("/products")
 public class ProductController {
     ProductService productService;
@@ -44,7 +46,9 @@ public class ProductController {
 
     @PutMapping("/{productId}")
     ApiResponse<ProductResponse> updateProduct(@PathVariable String productId,
-                                                 @RequestBody @Valid ProductUpdationRequest productUpdationRequest) {
+            @ModelAttribute @Valid ProductUpdationRequest productUpdationRequest) throws IOException {
+        log.info("==== controller update: {}", productId);
+        log.info("==== controller update: {}", productUpdationRequest);
         return ApiResponse.<ProductResponse>builder()
                 .result(productService.updateProduct(productId, productUpdationRequest))
                 .build();
