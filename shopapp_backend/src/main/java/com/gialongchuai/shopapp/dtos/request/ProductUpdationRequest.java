@@ -30,6 +30,7 @@ public class ProductUpdationRequest {
     LocalDate updatedAt;
 
     List<MultipartFile> images;
+    String categoryId;
     //CategoryCreationRequest categoryCreationRequest;
     //List<OrderDetail> orderDetails;
 }

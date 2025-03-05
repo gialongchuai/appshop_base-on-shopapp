@@ -26,6 +26,6 @@ public class ProductResponse {
     LocalDate createdAt;
     LocalDate updatedAt;
     List<ProductImageResponse> images;
-    //Category category;
+    CategoryResponse categoryResponse;
     //List<OrderDetail> orderDetails;
 }

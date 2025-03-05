@@ -11,11 +11,10 @@ import org.springframework.http.HttpStatusCode;
 @Getter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public enum ProductErrorCode implements BaseErrorCode {
-    PRODUCT_IS_REQUIRED(3001, "Product name is required!", HttpStatus.BAD_REQUEST),
-    PRODUCT_NOT_EXISTED(3002, "Product not exist!", HttpStatus.NOT_FOUND),
-    TIME_CREATE_IS_REQUIRED(3003, "Time create product is required!", HttpStatus.BAD_REQUEST),
-    TIME_UPDATE_IS_REQUIRED(3004, "Time update product is required!", HttpStatus.BAD_REQUEST);
+public enum OrderDetailErrorCode implements BaseErrorCode {
+    ORDER_NOT_EXISTED(6002, "Order not exist!", HttpStatus.NOT_FOUND),
+    PRODUCT_NOT_EXISTED(6002, "Product not exist!", HttpStatus.NOT_FOUND),
+    ORDER_DETAIL_NOT_EXISTED(6003, "Order detail not exist!", HttpStatus.NOT_FOUND);
 
     int code;
     String message;

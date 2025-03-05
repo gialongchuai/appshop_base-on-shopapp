@@ -1,6 +1,5 @@
 package com.gialongchuai.shopapp.entities;
 
-import com.gialongchuai.shopapp.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,10 +21,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    User user;
-
     @Column(name = "fullname", columnDefinition = "VARCHAR(100) COLLATE utf8mb4_general_ci DEFAULT ''")
     String fullname;
 
@@ -44,8 +39,8 @@ public class Order {
     @Column(name = "order_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     LocalDate orderDate;
 
-    @Column(name = "status", columnDefinition = "ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending'")
-    OrderStatus status;
+    @Column(name = "status", nullable = false, columnDefinition = "VARCHAR(20) COLLATE utf8mb4_general_ci")
+    String status;
 
     @Column(name = "total_money", columnDefinition = "FLOAT")
     Float totalMoney;
@@ -67,6 +62,10 @@ public class Order {
 
     @Column(name = "active", columnDefinition = "TINYINT(1)")
     Boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     List<OrderDetail> orderDetails;

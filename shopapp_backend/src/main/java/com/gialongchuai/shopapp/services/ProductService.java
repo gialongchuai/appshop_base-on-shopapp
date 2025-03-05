@@ -1,20 +1,20 @@
 package com.gialongchuai.shopapp.services;
 
 import com.gialongchuai.shopapp.constants.UploadFileConstant;
-import com.gialongchuai.shopapp.dtos.request.CategoryCreationRequest;
-import com.gialongchuai.shopapp.dtos.request.CategoryUpdationRequest;
 import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
 import com.gialongchuai.shopapp.dtos.request.ProductUpdationRequest;
-import com.gialongchuai.shopapp.dtos.response.CategoryResponse;
 import com.gialongchuai.shopapp.dtos.response.ProductResponse;
 import com.gialongchuai.shopapp.entities.Category;
 import com.gialongchuai.shopapp.entities.Product;
 import com.gialongchuai.shopapp.entities.ProductImage;
+import com.gialongchuai.shopapp.entities.User;
 import com.gialongchuai.shopapp.exceptions.CategoryErrorCode;
 import com.gialongchuai.shopapp.exceptions.ProductErrorCode;
 import com.gialongchuai.shopapp.exceptions.UploadFileErrorCode;
+import com.gialongchuai.shopapp.exceptions.UserErrorCode;
 import com.gialongchuai.shopapp.exceptions.custom.AppException;
 import com.gialongchuai.shopapp.mappers.ProductMapper;
+import com.gialongchuai.shopapp.repositories.CategoryRepository;
 import com.gialongchuai.shopapp.repositories.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +39,11 @@ import java.util.UUID;
 public class ProductService {
     ProductRepository productRepository;
     ProductMapper productMapper;
+    CategoryRepository categoryRepository;
 
     public ProductResponse create(ProductCreationRequest productCreationRequest) throws IOException {
+        Category category = categoryRepository.findById(productCreationRequest.getCategoryId()).orElseThrow(() ->
+                new AppException(CategoryErrorCode.CATEGORY_NOT_EXISTED));
         log.info("====== created at: {}", productCreationRequest.getCreatedAt());
         String thumbnailUrl = saveImage(productCreationRequest.getThumbnail());
 
@@ -55,6 +58,7 @@ public class ProductService {
         }
 
         var product = productMapper.toProduct(productCreationRequest);
+        product.setCategory(category);
         product.setThumbnail(thumbnailUrl);
 
         List<ProductImage> productImages = new ArrayList<>();
@@ -110,6 +114,8 @@ public class ProductService {
 
     // chat
     public ProductResponse updateProduct(String productId, ProductUpdationRequest productUpdationRequest) throws IOException {
+        Category category = categoryRepository.findById(productUpdationRequest.getCategoryId()).orElseThrow(() ->
+                new AppException(CategoryErrorCode.CATEGORY_NOT_EXISTED));
         log.info("======= product: {}", productUpdationRequest);
 
         // Tìm sản phẩm theo ID
@@ -140,7 +146,7 @@ public class ProductService {
 
         // Cập nhật danh sách ảnh cho sản phẩm
         product.setImages(existingImages);
-
+        product.setCategory(category);
         // Lưu sản phẩm đã cập nhật
         return productMapper.toProductResponse(productRepository.save(product));
     }

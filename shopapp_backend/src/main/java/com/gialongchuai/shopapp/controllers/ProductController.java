@@ -56,7 +56,6 @@ public class ProductController {
 
     @DeleteMapping("/{productId}")
     ApiResponse<String> delete(@PathVariable String productId) {
-        productService.deleteProduct(productId);
         return ApiResponse.<String>builder()
                 .result(productService.deleteProduct(productId))
                 .build();
