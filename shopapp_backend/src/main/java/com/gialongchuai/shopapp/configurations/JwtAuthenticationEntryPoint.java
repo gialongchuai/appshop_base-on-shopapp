@@ -1,16 +1,18 @@
 package com.gialongchuai.shopapp.configurations;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gialongchuai.shopapp.dtos.response.ApiResponse;
-import com.gialongchuai.shopapp.exceptions.SecurityErrorCode;
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import java.io.IOException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gialongchuai.shopapp.dtos.response.ApiResponse;
+import com.gialongchuai.shopapp.exceptions.SecurityErrorCode;
 
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override

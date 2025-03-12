@@ -1,14 +1,16 @@
 package com.gialongchuai.shopapp.dtos.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Setter
 @Getter
@@ -30,7 +32,9 @@ public class ProductUpdationRequest {
     LocalDate updatedAt;
 
     List<MultipartFile> images;
+
+    @NotBlank(message = "CATEGORY_IS_REQUIRED")
     String categoryId;
-    //CategoryCreationRequest categoryCreationRequest;
-    //List<OrderDetail> orderDetails;
+    // CategoryCreationRequest categoryCreationRequest;
+    // List<OrderDetail> orderDetails;
 }

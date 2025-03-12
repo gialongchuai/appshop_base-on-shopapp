@@ -1,0 +1,66 @@
+<div class="login-container" [ngClass]="{'dark-mode': isDarkMode}">
+    <div class="background-overlay"></div>
+    
+    <div class="login-box animate__animated animate__fadeIn">
+      <div class="mode-toggle">
+        <button class="btn btn-mode" (click)="toggleDarkMode()">
+          <i class="bi" [ngClass]="isDarkMode ? 'bi-sun' : 'bi-moon-stars'"></i>
+        </button>
+      </div>
+  
+      <div class="login-header">
+        <img src="assets/logo.png" alt="Logo" class="logo animate__animated animate__pulse animate__infinite animate__slower" *ngIf="logoLoaded" (error)="logoLoaded = false">
+        <h2 class="animate__animated animate__bounceInDown">Welcome Back</h2>
+        <p class="animate__animated animate__fadeInUp" [ngClass]="{'dark-mode-subtext': isDarkMode}">Please enter your credentials to login</p>
+      </div>
+  
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="animate__animated animate__zoomIn">
+        <div class="form-group">
+          <div class="input-group animate__animated animate__slideInLeft">
+            <span class="input-group-text"><i class="bi bi-person"></i></span>
+            <input 
+              type="email" 
+              class="form-control" 
+              placeholder="Email" 
+              ngModel 
+              name="email" 
+              required 
+              email>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <div class="input-group animate__animated animate__slideInRight">
+            <span class="input-group-text"><i class="bi bi-lock"></i></span>
+            <input 
+              type="password" 
+              class="form-control" 
+              placeholder="Password" 
+              ngModel 
+              name="password" 
+              required 
+              minlength="6">
+          </div>
+        </div>
+  
+        <div class="form-options animate__animated animate__fadeIn">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Remember me</label>
+          </div>
+          <a href="#" class="forgot-password">Forgot Password?</a>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn btn-login w-100 animate__animated animate__bounceIn" 
+          [disabled]="!loginForm.valid">
+          Login
+        </button>
+      </form>
+  
+      <div class="signup-link animate__animated animate__fadeInUp">
+        <p>Don't have an account? <a href="#">Sign up here</a></p>
+      </div>
+    </div>
+  </div>

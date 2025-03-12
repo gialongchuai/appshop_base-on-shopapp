@@ -1,10 +1,11 @@
 package com.gialongchuai.shopapp.entities;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.math.BigDecimal;
 
 @Table(name = "order_details")
 @Entity

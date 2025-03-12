@@ -1,9 +1,9 @@
 package com.gialongchuai.shopapp.dtos.response;
 
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -29,5 +29,5 @@ public class OrderResponse {
     String paymentMethod;
     Boolean active;
     String userId;
-    //List<OrderDetail> orderDetails;
+    // List<OrderDetail> orderDetails;
 }

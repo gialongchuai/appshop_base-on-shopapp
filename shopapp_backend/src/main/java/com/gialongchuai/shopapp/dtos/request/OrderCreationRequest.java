@@ -1,9 +1,9 @@
 package com.gialongchuai.shopapp.dtos.request;
 
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -28,5 +28,5 @@ public class OrderCreationRequest {
     String paymentMethod;
     Boolean active;
     String userId;
-    //List<OrderDetail> orderDetails;
+    // List<OrderDetail> orderDetails;
 }

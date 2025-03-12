@@ -1,9 +1,9 @@
 package com.gialongchuai.shopapp.exceptions.custom;
 
-import com.gialongchuai.shopapp.exceptions.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.gialongchuai.shopapp.exceptions.*;
 
 public class ErrorCodeResolver {
     private static final Map<String, BaseErrorCode> ERROR_CODE_MAP = new HashMap<>();

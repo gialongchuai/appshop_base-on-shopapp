@@ -1,6 +1,7 @@
 package com.gialongchuai.shopapp.entities;
 
 import jakarta.persistence.*;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

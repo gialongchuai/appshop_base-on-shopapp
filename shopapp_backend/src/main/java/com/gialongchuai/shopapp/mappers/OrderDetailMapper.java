@@ -1,12 +1,13 @@
 package com.gialongchuai.shopapp.mappers;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 import com.gialongchuai.shopapp.dtos.request.OrderDetailCreationRequest;
 import com.gialongchuai.shopapp.dtos.request.OrderDetailUpdationRequest;
 import com.gialongchuai.shopapp.dtos.response.OrderDetailResponse;
 import com.gialongchuai.shopapp.entities.OrderDetail;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", uses = ProductMapper.class)
 public interface OrderDetailMapper {
@@ -16,5 +17,6 @@ public interface OrderDetailMapper {
     @Mapping(target = "orderResponse", source = "order")
     OrderDetailResponse toOrderDetailResponse(OrderDetail orderDetail);
 
-    void updateOrderDetail(@MappingTarget OrderDetail orderDetail, OrderDetailUpdationRequest orderDetailUpdationRequest);
+    void updateOrderDetail(
+            @MappingTarget OrderDetail orderDetail, OrderDetailUpdationRequest orderDetailUpdationRequest);
 }

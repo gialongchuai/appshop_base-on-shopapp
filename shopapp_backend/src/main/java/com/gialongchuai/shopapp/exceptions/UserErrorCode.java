@@ -1,12 +1,14 @@
 package com.gialongchuai.shopapp.exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+
 import com.gialongchuai.shopapp.exceptions.custom.BaseErrorCode;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 
 @Getter
 @AllArgsConstructor
@@ -20,8 +22,8 @@ public enum UserErrorCode implements BaseErrorCode {
     CANNOT_SEND_EMAIL(1006, "Cannot send email!", HttpStatus.BAD_REQUEST),
     PHONE_NUMBER_REQUIRED(1007, "Phone number is required!", HttpStatus.BAD_REQUEST),
     PASSWORD_REQUIRED(1008, "Password is required!", HttpStatus.BAD_REQUEST),
-    ROLE_USER_NOT_EXISTED(1009, "Please check role in the system!", HttpStatus.BAD_REQUEST);
-
+    ROLE_USER_NOT_EXISTED(1009, "Please check role in the system!", HttpStatus.BAD_REQUEST),
+    USER_IS_LOCKED(1010, "User is locked!", HttpStatus.BAD_REQUEST);
 
     int code;
     String message;

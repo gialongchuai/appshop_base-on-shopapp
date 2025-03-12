@@ -1,11 +1,12 @@
 package com.gialongchuai.shopapp.mappers;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+
 import com.gialongchuai.shopapp.dtos.request.OrderCreationRequest;
 import com.gialongchuai.shopapp.dtos.request.OrderUpdationRequest;
 import com.gialongchuai.shopapp.dtos.response.OrderResponse;
 import com.gialongchuai.shopapp.entities.Order;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {

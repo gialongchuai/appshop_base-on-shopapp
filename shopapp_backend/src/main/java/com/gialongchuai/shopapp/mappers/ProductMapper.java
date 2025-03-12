@@ -1,13 +1,14 @@
 package com.gialongchuai.shopapp.mappers;
 
-import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
-import com.gialongchuai.shopapp.dtos.request.ProductUpdationRequest;
-import com.gialongchuai.shopapp.dtos.response.ProductResponse;
-import com.gialongchuai.shopapp.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
+
+import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
+import com.gialongchuai.shopapp.dtos.request.ProductUpdationRequest;
+import com.gialongchuai.shopapp.dtos.response.ProductResponse;
+import com.gialongchuai.shopapp.entities.Product;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {

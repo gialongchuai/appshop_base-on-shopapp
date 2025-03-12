@@ -1,11 +1,9 @@
 package com.gialongchuai.shopapp.dtos.response;
 
-import com.gialongchuai.shopapp.entities.Role;
+import java.time.LocalDate;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Setter
 @Getter

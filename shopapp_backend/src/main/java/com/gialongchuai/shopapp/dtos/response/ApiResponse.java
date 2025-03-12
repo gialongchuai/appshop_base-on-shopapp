@@ -1,6 +1,7 @@
 package com.gialongchuai.shopapp.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,4 +19,3 @@ public class ApiResponse<T> {
     String message;
     T result;
 }
-

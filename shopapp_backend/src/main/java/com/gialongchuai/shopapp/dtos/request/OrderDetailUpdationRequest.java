@@ -1,11 +1,12 @@
 package com.gialongchuai.shopapp.dtos.request;
 
+import java.math.BigDecimal;
+
 import com.gialongchuai.shopapp.entities.Order;
 import com.gialongchuai.shopapp.entities.Product;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.math.BigDecimal;
 
 @Setter
 @Getter

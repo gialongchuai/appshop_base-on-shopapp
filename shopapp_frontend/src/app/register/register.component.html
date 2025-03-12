@@ -1,0 +1,13 @@
+<div class="register-container">
+    <h2>Đăng ký tài khoản</h2>
+    
+    <!-- Hiển thị thông báo lỗi nếu có -->
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Nút đăng ký -->
+    <button (click)="onRegister()" [disabled]="loading">
+      {{ loading ? 'Đang đăng ký...' : 'Đăng ký' }}
+    </button>
+  </div>

@@ -1,14 +1,11 @@
 package com.gialongchuai.shopapp.dtos.response;
 
-import com.gialongchuai.shopapp.entities.Category;
-import com.gialongchuai.shopapp.entities.OrderDetail;
-import com.gialongchuai.shopapp.entities.ProductImage;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Setter
 @Getter
@@ -27,5 +24,5 @@ public class ProductResponse {
     LocalDate updatedAt;
     List<ProductImageResponse> images;
     CategoryResponse categoryResponse;
-    //List<OrderDetail> orderDetails;
+    // List<OrderDetail> orderDetails;
 }

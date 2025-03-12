@@ -1,14 +1,17 @@
 package com.gialongchuai.shopapp.dtos.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Setter
 @Getter
@@ -23,15 +26,20 @@ public class ProductCreationRequest {
 
     BigDecimal price;
     String description;
+
+    @NotNull(message = "THUMBNAIL_IS_REQUIRED")
     MultipartFile thumbnail;
 
     @NotNull(message = "TIME_CREATE_IS_REQUIRED")
     LocalDate createdAt;
 
     LocalDate updatedAt;
+
+    @NotNull(message = "IMAGE_IS_REQUIRED")
     List<MultipartFile> images;
 
+    @NotBlank(message = "CATEGORY_IS_REQUIRED")
     String categoryId;
-    //CategoryCreationRequest categoryCreationRequest;
-    //List<OrderDetail> orderDetails;
+    // CategoryCreationRequest categoryCreationRequest;
+    // List<OrderDetail> orderDetails;
 }

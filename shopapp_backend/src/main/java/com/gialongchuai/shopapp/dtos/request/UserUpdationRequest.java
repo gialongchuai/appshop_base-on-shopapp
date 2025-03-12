@@ -1,11 +1,11 @@
 package com.gialongchuai.shopapp.dtos.request;
 
-import com.gialongchuai.shopapp.entities.Role;
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotBlank;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter

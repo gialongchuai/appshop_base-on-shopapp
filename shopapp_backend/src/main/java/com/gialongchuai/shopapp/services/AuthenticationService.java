@@ -1,5 +1,17 @@
 package com.gialongchuai.shopapp.services;
 
+import java.text.ParseException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.StringJoiner;
+import java.util.UUID;
+
+import com.gialongchuai.shopapp.services.impl.IAuthenticationService;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.gialongchuai.shopapp.dtos.request.AuthenticationRequest;
 import com.gialongchuai.shopapp.dtos.request.IntroSpectRequest;
 import com.gialongchuai.shopapp.dtos.request.LogoutRequest;
@@ -18,27 +30,18 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.StringJoiner;
-import java.util.UUID;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
     InvalidatedTokenRepository invalidatedTokenRepository;
@@ -55,8 +58,8 @@ public class AuthenticationService {
     @Value("${jwt.refreshable-duration}")
     private long REFRESHABLE_DURATION;
 
-    public IntroSpectResponse introspect(IntroSpectRequest introSpectRequest)
-            throws JOSEException, ParseException {
+    @Override
+    public IntroSpectResponse introspect(IntroSpectRequest introSpectRequest) throws JOSEException, ParseException {
         String token = introSpectRequest.getToken();
 
         boolean isValid = true;
@@ -94,6 +97,7 @@ public class AuthenticationService {
         return signedJWT;
     }
 
+    @Override
     public void logout(LogoutRequest logoutRequest) throws ParseException, JOSEException {
         SignedJWT signToken = verifyToken(logoutRequest.getToken(), true);
 
@@ -107,6 +111,7 @@ public class AuthenticationService {
         invalidatedTokenRepository.save(invalidatedToken);
     }
 
+    @Override
     public AuthenticationResponse refreshToken(RefreshTokenRequest request) throws ParseException, JOSEException {
         SignedJWT signedJWT = verifyToken(request.getToken(), true);
 
@@ -120,8 +125,6 @@ public class AuthenticationService {
         invalidatedTokenRepository.save(invalidatedToken);
 
         var userId = signedJWT.getJWTClaimsSet().getSubject();
-        log.info("======== USERNAME: ");
-
 
         var user =
                 userRepository.findById(userId).orElseThrow(() -> new AppException(SecurityErrorCode.UNAUTHENTICATED));
@@ -131,29 +134,27 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().authenticated(true).token(token).build();
     }
 
+    @Override
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
-        log.info("==================");
-        log.info("Signer Key: " + SIGNER_KEY);
-        log.info("==================");
         User user = userRepository
                 .findByPhoneNumber(authenticationRequest.getPhoneNumber())
                 .orElseThrow(() -> new AppException(UserErrorCode.USER_NOT_EXISTED));
 
+        if (!user.getIsActive()) {
+            throw new AppException(UserErrorCode.USER_IS_LOCKED);
+        }
+
         boolean authenticated = passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword());
 
-        // không đúng username và pass để xác thực thì quăng lỗi
         if (!authenticated) {
             throw new AppException(SecurityErrorCode.UNAUTHENTICATED);
         }
 
-        // đúng rồi thì tạo cho 1 cái token để có thể thực hiện nhiều request và phải kèm theo token
         String token = generateToken(user);
 
         return AuthenticationResponse.builder().authenticated(true).token(token).build();
     }
 
-    // nhận user người dùng để tạo token, do post user là mặc định được public nên được phép tạo user thoải mái
-    // và sau khi tạo thaành công user thì mặc định người đó có role: USER (enum default)
     private String generateToken(User user) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 

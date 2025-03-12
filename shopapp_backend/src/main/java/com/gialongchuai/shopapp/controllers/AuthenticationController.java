@@ -1,5 +1,13 @@
 package com.gialongchuai.shopapp.controllers;
 
+import java.text.ParseException;
+
+import com.gialongchuai.shopapp.services.impl.IAuthenticationService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.gialongchuai.shopapp.dtos.request.AuthenticationRequest;
 import com.gialongchuai.shopapp.dtos.request.IntroSpectRequest;
 import com.gialongchuai.shopapp.dtos.request.LogoutRequest;
@@ -7,18 +15,12 @@ import com.gialongchuai.shopapp.dtos.request.RefreshTokenRequest;
 import com.gialongchuai.shopapp.dtos.response.ApiResponse;
 import com.gialongchuai.shopapp.dtos.response.AuthenticationResponse;
 import com.gialongchuai.shopapp.dtos.response.IntroSpectResponse;
-import com.gialongchuai.shopapp.services.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.text.ParseException;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,12 +28,12 @@ import java.text.ParseException;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AuthenticationController {
-    AuthenticationService authenticationService;
+    IAuthenticationService iAuthenticationService;
 
     @PostMapping("/token")
     public ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         return ApiResponse.<AuthenticationResponse>builder()
-                .result(authenticationService.authenticate(authenticationRequest))
+                .result(iAuthenticationService.authenticate(authenticationRequest))
                 .build();
     }
 
@@ -39,15 +41,14 @@ public class AuthenticationController {
     public ApiResponse<IntroSpectResponse> introspect(@RequestBody IntroSpectRequest introSpectRequest)
             throws ParseException, JOSEException {
         return ApiResponse.<IntroSpectResponse>builder()
-                .result(authenticationService.introspect(introSpectRequest))
+                .result(iAuthenticationService.introspect(introSpectRequest))
                 .build();
     }
 
     @PostMapping("/logout")
     public ApiResponse<Void> logout(@RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
-        authenticationService.logout(logoutRequest);
-        return ApiResponse.<Void>builder()
-                .build();
+        iAuthenticationService.logout(logoutRequest);
+        return ApiResponse.<Void>builder().build();
     }
 
     @PostMapping("/refresh")
@@ -55,7 +56,7 @@ public class AuthenticationController {
             throws ParseException, JOSEException {
         log.info(request.getToken());
         return ApiResponse.<AuthenticationResponse>builder()
-                .result(authenticationService.refreshToken(request))
+                .result(iAuthenticationService.refreshToken(request))
                 .build();
     }
 }
