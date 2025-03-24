@@ -5,5 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.gialongchuai.shopapp.entities.OrderDetail;
 
+import java.util.List;
+
 @Repository
-public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {}
+public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
+    List<OrderDetail> findAllByOrderId(String orderId);
+}

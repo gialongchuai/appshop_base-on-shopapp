@@ -1,6 +1,9 @@
 package com.gialongchuai.shopapp.controllers;
 
+import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
+import com.gialongchuai.shopapp.dtos.response.ProductResponse;
 import com.gialongchuai.shopapp.services.impl.IProductImageService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import com.gialongchuai.shopapp.dtos.response.ApiResponse;
@@ -10,6 +13,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController

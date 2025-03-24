@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.UUID;
 
 import com.gialongchuai.shopapp.services.impl.IProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -154,9 +157,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductResponse> getAllProducts() {
-        var products = productRepository.findAll();
-        return products.stream().map(productMapper::toProductResponse).toList();
+    public List<ProductResponse> getAllProducts(String keyword, String categoryId, int page, int limit) {
+        // Tạo Pageable từ page và limit
+        Pageable pageable = PageRequest.of(page, limit);
+
+        // Gọi phương thức searchProducts từ repository
+        Page<Product> productPage = productRepository.searchProducts(categoryId, keyword, pageable);
+
+        List<Product> products = productPage.getContent();
+
+        int totalPages = productPage.getTotalPages();
+        System.out.printf(totalPages + " :totalPage!");
+        // Chuyển đổi Page<Product> sang Page<ProductResponse>
+        return productPage.stream().map(productMapper::toProductResponse).toList();
     }
 
     @Override

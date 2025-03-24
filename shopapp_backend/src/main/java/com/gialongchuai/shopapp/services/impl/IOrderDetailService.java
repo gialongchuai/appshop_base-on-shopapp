@@ -9,6 +9,7 @@ import java.util.List;
 public interface IOrderDetailService {
     OrderDetailResponse create(OrderDetailCreationRequest orderDetailCreationRequest);
     List<OrderDetailResponse> getAllOrderDetails();
+    List<OrderDetailResponse> getAllOrderDetailsOfOrder(String orderId);
     OrderDetailResponse getOrderDetail(String orderDetailId);
     OrderDetailResponse updateOrderDetail(
             String orderDetailId, OrderDetailUpdationRequest orderDetailUpdationRequest);

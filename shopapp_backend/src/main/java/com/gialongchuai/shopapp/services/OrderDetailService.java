@@ -2,6 +2,7 @@ package com.gialongchuai.shopapp.services;
 
 import java.util.List;
 
+import com.gialongchuai.shopapp.exceptions.OrderErrorCode;
 import com.gialongchuai.shopapp.services.impl.IOrderDetailService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class OrderDetailService implements IOrderDetailService {
     public OrderDetailResponse create(OrderDetailCreationRequest orderDetailCreationRequest) {
         Order order = orderRepository
                 .findById(orderDetailCreationRequest.getOrderId())
-                .orElseThrow(() -> new AppException(OrderDetailErrorCode.ORDER_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(OrderErrorCode.ORDER_NOT_EXISTED));
 
         Product product = productRepository
                 .findById(orderDetailCreationRequest.getProductId())
@@ -55,6 +56,15 @@ public class OrderDetailService implements IOrderDetailService {
     @Override
     public List<OrderDetailResponse> getAllOrderDetails() {
         var orderDetails = orderDetailRepository.findAll();
+        return orderDetails.stream()
+                .map(orderDetailMapper::toOrderDetailResponse)
+                .toList();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @Override
+    public List<OrderDetailResponse> getAllOrderDetailsOfOrder(String orderId) {
+        var orderDetails = orderDetailRepository.findAllByOrderId(orderId);
         return orderDetails.stream()
                 .map(orderDetailMapper::toOrderDetailResponse)
                 .toList();
@@ -78,7 +88,7 @@ public class OrderDetailService implements IOrderDetailService {
 
         Order order = orderRepository
                 .findById(orderDetailUpdationRequest.getOrderId())
-                .orElseThrow(() -> new AppException(OrderDetailErrorCode.ORDER_NOT_EXISTED));
+                .orElseThrow(() -> new AppException(OrderErrorCode.ORDER_NOT_EXISTED));
 
         Product product = productRepository
                 .findById(orderDetailUpdationRequest.getProductId())

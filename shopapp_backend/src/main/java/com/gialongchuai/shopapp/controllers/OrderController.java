@@ -41,6 +41,13 @@ public class OrderController {
                 .build();
     }
 
+    @GetMapping("/user/{user_id}")
+    ApiResponse<List<OrderResponse>> getAllOrdersByUserId(@PathVariable("user_id") String userId) {
+        return ApiResponse.<List<OrderResponse>>builder()
+                .result(iOrderService.getAllOrdersByUserId(userId))
+                .build();
+    }
+
     @GetMapping("/{orderId}")
     ApiResponse<OrderResponse> getOrder(@PathVariable String orderId) {
         return ApiResponse.<OrderResponse>builder()

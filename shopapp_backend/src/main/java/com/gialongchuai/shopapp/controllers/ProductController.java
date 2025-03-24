@@ -1,11 +1,13 @@
 package com.gialongchuai.shopapp.controllers;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.gialongchuai.shopapp.services.impl.IProductService;
 import jakarta.validation.Valid;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import com.gialongchuai.shopapp.dtos.request.ProductCreationRequest;
@@ -36,9 +38,16 @@ public class ProductController {
     }
 
     @GetMapping
-    ApiResponse<List<ProductResponse>> getAllProducts() {
+    ApiResponse<List<ProductResponse>> getAllProducts(
+            @RequestParam(required = false) String categoryId,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit
+    ) {
+        List<ProductResponse> productPage = iProductService.getAllProducts(keyword, categoryId, page, limit);
+
         return ApiResponse.<List<ProductResponse>>builder()
-                .result(iProductService.getAllProducts())
+                .result(productPage)
                 .build();
     }
 

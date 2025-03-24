@@ -1,6 +1,7 @@
 package com.gialongchuai.shopapp.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.gialongchuai.shopapp.dtos.request.OrderCreationRequest;

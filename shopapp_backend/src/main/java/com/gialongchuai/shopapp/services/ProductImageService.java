@@ -1,5 +1,7 @@
 package com.gialongchuai.shopapp.services;
 
+import com.gialongchuai.shopapp.dtos.request.ProductImageRequest;
+import com.gialongchuai.shopapp.dtos.response.ProductImageResponse;
 import com.gialongchuai.shopapp.services.impl.IProductImageService;
 import org.springframework.stereotype.Service;
 

@@ -39,13 +39,25 @@ public class OrderService implements IOrderService {
         Order order = orderMapper.toOrder(orderCreationRequest);
         order.setUser(user);
 
-        return orderMapper.toOrderResponse(orderRepository.save(order));
+        order = orderRepository.save(order);
+
+        OrderResponse orderResponse = orderMapper.toOrderResponse(order);
+        orderResponse.setUserId(orderCreationRequest.getUserId());
+
+        return orderResponse;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @Override
     public List<OrderResponse> getAllOrders() {
         var orders = orderRepository.findAll();
+        return orders.stream().map(orderMapper::toOrderResponse).toList();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @Override
+    public List<OrderResponse> getAllOrdersByUserId(String userId) {
+        var orders = orderRepository.findAllByUserId(userId);
         return orders.stream().map(orderMapper::toOrderResponse).toList();
     }
 

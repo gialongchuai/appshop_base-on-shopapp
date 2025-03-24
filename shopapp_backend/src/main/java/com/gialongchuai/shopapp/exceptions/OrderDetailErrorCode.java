@@ -14,9 +14,15 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum OrderDetailErrorCode implements BaseErrorCode {
-    ORDER_NOT_EXISTED(6002, "Order not exist!", HttpStatus.NOT_FOUND),
-    PRODUCT_NOT_EXISTED(6002, "Product not exist!", HttpStatus.NOT_FOUND),
-    ORDER_DETAIL_NOT_EXISTED(6003, "Order detail not exist!", HttpStatus.NOT_FOUND);
+    PRODUCT_NOT_EXISTED(6001, "Product not exist!", HttpStatus.NOT_FOUND),
+    ORDER_DETAIL_NOT_EXISTED(6002, "Order detail not exist!", HttpStatus.NOT_FOUND),
+    PRICE_IS_REQUIRED(6003, "Price is required!", HttpStatus.BAD_REQUEST),
+    PRICE_INVALID(6004, "Price must be greater than or equal to 0!", HttpStatus.BAD_REQUEST),
+    NUMBER_OF_PRODUCTS_IS_REQUIRED(6005, "Number of products is required!", HttpStatus.BAD_REQUEST),
+    NUMBER_OF_PRODUCTS_INVALID(6006, "Number of products must be at least 1!", HttpStatus.BAD_REQUEST),
+    TOTAL_MONEY_IS_REQUIRED(6007, "Total money is required!", HttpStatus.BAD_REQUEST),
+    TOTAL_MONEY_INVALID(6008, "Total money must be greater than or equal to 0!", HttpStatus.BAD_REQUEST);
+
 
     int code;
     String message;
