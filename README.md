@@ -1,41 +1,109 @@
 # ShopApp Backend
 
-## Description
+Một hệ thống backend e-commerce RESTful API hoàn chỉnh được phát triển bằng **Spring Boot** và **Java 17**. Hệ thống mô phỏng các tính năng e-commerce cốt lõi như **xác thực người dùng**, **quản lý sản phẩm**, **xử lý đơn hàng**, và **kiểm soát truy cập dựa trên vai trò**, với kiến trúc clean architecture và khả năng bảo trì cao.
 
-**ShopApp Backend** is a modular, RESTful backend API developed for an **e-commerce application** as part of a self-learning project using **Spring Boot** and **Java 17**. The system simulates core e-commerce functionalities such as **user authentication**, **product management**, **order processing**, and **role-based access control**, with a strong emphasis on clean architecture and maintainability.
+## 🏗️ Kiến trúc Layered
 
-The backend system follows a layered architecture with clearly separated modules:
-- **Controller**
-- **Service**
-- **Repository**
-- **DTO**
-- **Mapper**
-- **Entity**
+```
+  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+  │     Client      │────│   Controller    │────│     Service     │
+  │   (Frontend)    │    │     Layer       │    │     Layer       │
+  └─────────────────┘    └─────────────────┘    └─────────────────┘
+                                  │                       │
+                                  │               ┌─────────────────┐
+                                  │───────────────│   Repository    │
+                                                  │     Layer       │
+                                                  └─────────────────┘
+                                                          │
+                                                 ┌─────────────────┐
+                                                 │     MySQL       │
+                                                 │   Database      │
+                                                 └─────────────────┘
+  
+  ┌───────────────────────────────────────────────────────────────────────┐
+  │                     Cross-Cutting Concerns                            │
+  ├─────────────────┬─────────────────┬─────────────────┬─────────────────┤
+  │   Security      │   Global Error  │   DTO Mapping   │   Validation    │
+  │  (JWT/OAuth2)   │    Handling     │   (MapStruct)   │   & Logging     │
+  └─────────────────┴─────────────────┴─────────────────┴─────────────────┘
+```
 
-### Key Features
-- **Secure JWT Authentication**: Implemented using **JWT** tokens with custom decoding and integrated with **OAuth2 Resource Server** for secure user access.
-- **Modular Architecture**: Clear separation of concerns across controller, service, repository, and data models.
-- **Request-Response Models**: Designed structured **DTO-based** models to enable secure and clear data exchange.
-- **Efficient Object Mapping**: Automated DTO-to-entity mapping using **MapStruct**, reducing boilerplate and enhancing clarity.
-- **Robust CRUD Operations**: Developed endpoints for categories, products, users, roles, orders, and product images following **RESTful principles**.
-- **Global Exception Handling**: Implemented a **centralized global error handler** with custom error codes per module.
-- **Simplified Data Access**: Leveraged **Spring Data JPA** and **Lombok** to streamline data persistence and reduce verbosity.
-- **Role-Based Access Control**: Secured API endpoints using **Spring Security** with proper **CORS configuration** and **role-based permissions**.
+## 🚀 Tính năng chính
 
-## Technologies Used
+-  #### **🔐 Xác thực & Bảo mật**
+-  #### **📦 Quản lý sản phẩm**
+-  #### **👥 Quản lý người dùng**
+-  #### **🛒 Xử lý đơn hàng**
 
-### Backend & Framework
-- **Spring Boot**, **Java 17**
-- **Spring Data JPA**, **MapStruct**, **Lombok**
+## 🛠️ Công nghệ sử dụng
 
-### Security & Authentication
-- **JWT**, **OAuth2 Resource Server**
-- **Spring Security**
+### **Backend Framework**
+- **Spring Boot** - Framework ứng dụng chính
+- **Java 17** - Ngôn ngữ lập trình
+- **Spring Data JPA** - Data persistence và ORM
+- **Spring Security** - Authentication và authorization
 
-### Architecture & Design
-- **DTO**, **Mapper**, **Entity** layered design
-- **RESTful API principles**
+### **Database & Persistence**
+- **MySQL** - Cơ sở dữ liệu quan hệ chính
+- **HikariCP** - Connection pooling hiệu suất cao
 
-### Error Handling
-- **Centralized Global Exception Handler**
-- **Custom error codes**
+### **Security & Authentication**
+- **JWT** - Stateless authentication
+- **OAuth2 Resource Server** - Fine-grained access control
+- **BCrypt** - Secure password hashing
+
+### **Development Tools**
+- **Maven** - Build automation
+- **MapStruct** - DTO-Entity mapping tự động
+- **Lombok** - Giảm boilerplate code
+- **Jakarta Validation** - Request data validation
+
+## 📁 Cấu trúc dự án
+
+```
+shopapp-backend/
+├── src/main/java/com/shopapp/
+│   ├── controllers/          # REST API endpoints
+│   ├── services/            # Business logic layer
+│   ├── repositories/        # Data access layer
+│   ├── entities/           # JPA entity models
+│   ├── dtos/              # Data Transfer Objects
+│   ├── mappers/           # MapStruct mappers
+│   ├── config/            # Application configuration
+│   ├── exceptions/        # Global exception handling
+│   └── utils/             # Utility classes
+├── src/main/resources/
+├── src/test/             # Test classes
+└── README.md
+```
+
+## 🏗️ Kiến trúc Clean Architecture
+
+### **Layer Separation**
+- **Controller Layer**: Xử lý HTTP requests/responses
+- **Service Layer**: Business logic và validation
+- **Repository Layer**: Data access và database operations
+- **DTO Layer**: Data transfer objects cho API communication
+
+### **Cross-cutting Concerns**
+- **Global Exception Handling**: Centralized error management với custom error codes
+- **Security**: JWT authentication và role-based authorization
+- **Mapping**: Automated DTO-Entity mapping với MapStruct
+- **Validation**: Input validation với Jakarta Validation
+
+## 🔒 Tính năng bảo mật
+
+- **JWT Authentication** với custom decoding
+- **OAuth2 Resource Server** cho fine-grained permissions
+- **BCrypt password hashing** cho secure credential storage
+- **CORS configuration** cho cross-origin request handling
+- **Role-based access control** với user/admin roles
+
+## 📚 Best Practices được áp dụng
+
+- **Layered Architecture** với clear separation of concerns
+- **DTO Pattern** cho secure data transfer
+- **Repository Pattern** cho data access abstraction
+- **Global Exception Handling** cho consistent error responses
+- **MapStruct** cho efficient object mapping
+- **Lombok** để giảm boilerplate code
