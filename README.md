@@ -2,32 +2,6 @@
 
 Một hệ thống backend e-commerce RESTful API hoàn chỉnh được phát triển bằng **Spring Boot** và **Java 17**. Hệ thống mô phỏng các tính năng e-commerce cốt lõi như **xác thực người dùng**, **quản lý sản phẩm**, **xử lý đơn hàng**, và **kiểm soát truy cập dựa trên vai trò**, với kiến trúc clean architecture và khả năng bảo trì cao.
 
-## 🏗️ Kiến trúc Layered
-
-```
-  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-  │     Client      │────│   Controller    │────│     Service     │
-  │   (Frontend)    │    │     Layer       │    │     Layer       │
-  └─────────────────┘    └─────────────────┘    └─────────────────┘
-                                  │                       │
-                                  │               ┌─────────────────┐
-                                  │───────────────│   Repository    │
-                                                  │     Layer       │
-                                                  └─────────────────┘
-                                                          │
-                                                 ┌─────────────────┐
-                                                 │     MySQL       │
-                                                 │   Database      │
-                                                 └─────────────────┘
-  
-  ┌───────────────────────────────────────────────────────────────────────┐
-  │                     Cross-Cutting Concerns                            │
-  ├─────────────────┬─────────────────┬─────────────────┬─────────────────┤
-  │   Security      │   Global Error  │   DTO Mapping   │   Validation    │
-  │  (JWT/OAuth2)   │    Handling     │   (MapStruct)   │   & Logging     │
-  └─────────────────┴─────────────────┴─────────────────┴─────────────────┘
-```
-
 ## 🚀 Tính năng chính
 
 -  #### **🔐 Xác thực & Bảo mật**
@@ -57,25 +31,6 @@ Một hệ thống backend e-commerce RESTful API hoàn chỉnh được phát t
 - **MapStruct** - DTO-Entity mapping tự động
 - **Lombok** - Giảm boilerplate code
 - **Jakarta Validation** - Request data validation
-
-## 📁 Cấu trúc dự án
-
-```
-shopapp-backend/
-├── src/main/java/com/shopapp/
-│   ├── controllers/          # REST API endpoints
-│   ├── services/            # Business logic layer
-│   ├── repositories/        # Data access layer
-│   ├── entities/           # JPA entity models
-│   ├── dtos/              # Data Transfer Objects
-│   ├── mappers/           # MapStruct mappers
-│   ├── config/            # Application configuration
-│   ├── exceptions/        # Global exception handling
-│   └── utils/             # Utility classes
-├── src/main/resources/
-├── src/test/             # Test classes
-└── README.md
-```
 
 ## 🏗️ Kiến trúc Clean Architecture
 
